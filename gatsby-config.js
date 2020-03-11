@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Kolumbo Website`,
+    description: `Kolumbo's Website`,
+    author: `Jacob Silver`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -27,8 +27,22 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: "gatsby-source-prismic-graphql",
+      options: {
+        repositoryName: "kolumbo",
+        // accessToken: "#######",
+        path: "/preview",
+        previews: true,
+        // pages: [
+        //   {
+        //     type: "blogPost",
+        //     match: "/blogPost/:uid",
+        //     path: "/blogPost",
+        //     component: require.resolve("./src/templates/blogPost.js"),
+        //   },
+        // ],
+      },
+    },
   ],
 }
