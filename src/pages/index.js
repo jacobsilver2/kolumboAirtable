@@ -2,6 +2,7 @@ import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import News from "../components/News"
+import Shows from "../components/ShowsComponent"
 
 export default () => {
   return (
@@ -14,6 +15,7 @@ export default () => {
         <h1>News</h1>
         <News />
         <hr />
+        <Shows />
       </Layout>
     </div>
   )

@@ -1,27 +1,44 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import { RichText } from "prismic-reactjs"
+import Img from "gatsby-image"
 
 export default () => {
   const data = useStaticQuery(graphql`
-    query blogQuery {
-      prismic {
-        allBlog_posts {
-          edges {
-            node {
-              blog_post_title
+    query MyQuery {
+      allAirtable(filter: { table: { eq: "News" } }) {
+        nodes {
+          data {
+            Title
+            Notes
+            Image {
+              localFiles {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
             }
           }
+          id
         }
       }
     }
   `)
-  const post = data.prismic.allBlog_posts.edges.slice(0, 1).pop()
-  if (!post) return null
+  const { nodes } = data.allAirtable
 
-  return (
-    <>
-      <h1>{RichText.render(post.node.blog_post_title)}</h1>
-    </>
-  )
+  const theNews = nodes.map(node => {
+    const { data } = node
+    return (
+      <div key={node.id}>
+        {data.Title && <h1>{data.Title}</h1>}
+        {data.Notes && <h2>{data.Notes}</h2>}
+        {data.Image && (
+          <Img fluid={data.Image.localFiles[0].childImageSharp.fluid} />
+        )}
+      </div>
+    )
+  })
+
+  return <>{theNews}</>
 }

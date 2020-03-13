@@ -1,40 +1,36 @@
 import React from "react"
-import Layout from "../components/layout"
-import { graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-export const pageQuery = graphql`
-  {
-    allAirtable(filter: { table: { eq: "Shows" } }) {
-      nodes {
-        data {
-          Date_and_Time(locale: "USA/NY", formatString: "LLLL")
-          Information
-          Venue
-          Venue_Address
-          Venue_Website
-          Poster {
-            localFiles {
-              childImageSharp {
-                fluid {
-                  ...GatsbyImageSharpFluid
+export default () => {
+  const data = useStaticQuery(graphql`
+    query ShowsQuery {
+      allAirtable(filter: { table: { eq: "Shows" } }) {
+        nodes {
+          data {
+            Date_and_Time(locale: "USA/NY", formatString: "LLLL")
+            Information
+            Venue
+            Venue_Address
+            Venue_Website
+            Poster {
+              localFiles {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid
+                  }
                 }
               }
             }
           }
+          id
         }
-        id
       }
     }
-  }
-`
-
-export default ({ data }) => {
+  `)
   const { nodes } = data.allAirtable
-
   const theShows = nodes.map(show => {
     const { data } = show
-
     return (
       <div key={show.id}>
         {data.Date_and_Time && <h1>{data.Date_and_Time}</h1>}
@@ -52,5 +48,5 @@ export default ({ data }) => {
     )
   })
 
-  return <Layout>{theShows}</Layout>
+  return <>{theShows}</>
 }

@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Kolumbo Website`,
@@ -28,20 +32,32 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-source-prismic-graphql",
+      resolve: `gatsby-source-airtable`,
       options: {
-        repositoryName: "kolumbo",
-        // accessToken: "#######",
-        path: "/preview",
-        previews: true,
-        // pages: [
-        //   {
-        //     type: "blogPost",
-        //     match: "/blogPost/:uid",
-        //     path: "/blogPost",
-        //     component: require.resolve("./src/templates/blogPost.js"),
-        //   },
-        // ],
+        apiKey: process.env.GATSBY_AIRTABLE_API_KEY,
+        concurrency: 5,
+        tables: [
+          {
+            baseId: `appj9fMXWDjsQQHnZ`,
+            tableName: `News`,
+            mapping: { Image: `fileNode` }, // optional, e.g. "text/markdown", "fileNode"
+          },
+          {
+            baseId: `appj9fMXWDjsQQHnZ`,
+            tableName: `Shows`,
+            mapping: { Poster: `fileNode` }, // optional, e.g. "text/markdown", "fileNode"
+          },
+          {
+            baseId: `appj9fMXWDjsQQHnZ`,
+            tableName: `Photos`,
+            mapping: { Image: `fileNode` }, // optional, e.g. "text/markdown", "fileNode"
+          },
+          {
+            baseId: `appj9fMXWDjsQQHnZ`,
+            tableName: `About`,
+            mapping: { Image: `fileNode` }, // optional, e.g. "text/markdown", "fileNode"
+          },
+        ],
       },
     },
   ],
