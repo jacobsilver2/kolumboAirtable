@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import News from "../components/News"
 import Shows from "../components/ShowsComponent"
+import Instagram from "../components/Instagram"
 
 export default () => {
   return (
@@ -16,6 +17,7 @@ export default () => {
         <News />
         <hr />
         <Shows />
+        <Instagram />
       </Layout>
     </div>
   )
